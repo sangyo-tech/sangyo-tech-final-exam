@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>理解度確認テスト（解説付き） | 産業技術アカデミー</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;overflow-x:hidden}
+body{font-family:'Noto Sans JP',sans-serif;background:#f4f7fb;color:#222;line-height:1.8}
+a{text-decoration:none}
+.hd{background:#0b1f3a;padding:0 24px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.hd-logo{font-family:'Noto Serif JP',serif;font-size:20px;font-weight:700;color:#fff;letter-spacing:.08em}
+.hd-back{font-size:13px;color:#8faac8;white-space:nowrap}
+.hd-back:hover{color:#e8b84b}
+.strip{height:3px;background:linear-gradient(90deg,#1a6fbf,#0ea5c8,#c8921a)}
+.hero{background:linear-gradient(135deg,#0b1f3a 0%,#132d52 60%,#0f3b66 100%);padding:52px 24px 44px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(14,165,200,.07)}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:160px;height:160px;border-radius:50%;background:rgba(200,146,26,.05)}
+
+/* 歯車・ねじアニメーション */
+@keyframes gearSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes gearSpinR{0%{transform:rotate(0deg)}100%{transform:rotate(-360deg)}}
+@keyframes floatUp{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-18px) rotate(8deg)}}
+@keyframes floatUpB{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-14px) rotate(-6deg)}}
+@keyframes floatUpC{0%,100%{transform:translateY(0px) rotate(0deg)}50%{transform:translateY(-22px) rotate(12deg)}}
+@keyframes fadeInFloat{0%{opacity:0;transform:translateY(20px)}100%{opacity:1;transform:translateY(0)}}
+
+.hero-parts{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.gear{position:absolute;opacity:.13;line-height:1}
+.gear svg{display:block}
+.g1{top:8%;left:4%;animation:floatUp 7s ease-in-out infinite}
+.g1 svg{animation:gearSpin 12s linear infinite}
+.g2{top:12%;right:6%;animation:floatUpB 9s ease-in-out infinite 1s}
+.g2 svg{animation:gearSpinR 8s linear infinite}
+.g3{bottom:10%;left:12%;animation:floatUpC 8s ease-in-out infinite 2s}
+.g3 svg{animation:gearSpin 18s linear infinite}
+.g4{top:35%;left:1%;animation:floatUp 11s ease-in-out infinite 0.5s}
+.g4 svg{animation:gearSpinR 14s linear infinite}
+.g5{bottom:15%;right:4%;animation:floatUpB 6s ease-in-out infinite 1.5s}
+.g5 svg{animation:gearSpin 10s linear infinite}
+.g6{top:20%;left:30%;animation:floatUpC 10s ease-in-out infinite 3s}
+.g6 svg{animation:gearSpinR 20s linear infinite}
+.g7{bottom:5%;right:22%;animation:floatUp 8s ease-in-out infinite 0.8s}
+.g7 svg{animation:gearSpin 16s linear infinite}
+.bolt{position:absolute;opacity:.10;font-size:1.4rem;animation:floatUpB 9s ease-in-out infinite}
+.bolt1{top:55%;left:8%;animation-delay:0s}
+.bolt2{top:25%;right:18%;animation-delay:2s}
+.bolt3{bottom:30%;left:38%;animation-delay:4s}
+.bolt4{top:70%;right:10%;animation-delay:1s}
+.hero-content{position:relative;z-index:1}
+.hero-label{font-size:11px;letter-spacing:.25em;color:#e8b84b;font-weight:700;margin-bottom:14px}
+.hero-title{font-family:'Noto Serif JP',serif;font-size:30px;font-weight:700;color:#fff;letter-spacing:.06em;margin-bottom:12px}
+.hero-sub{font-size:14px;color:#8faac8;max-width:900px;margin:0 auto;line-height:1.8}
+.wrap{width:100%;max-width:none;margin:0;padding:44px 24px 72px}
+.note{background:#fff;border-radius:12px;padding:18px 24px;margin-bottom:24px;border:1px solid #e8eef6;border-left:4px solid #e8b84b;display:flex;align-items:flex-start;gap:12px;font-size:13.5px;color:#555;line-height:1.8}
+.note-icon{font-size:20px;flex-shrink:0;margin-top:2px}
+.sec{margin-bottom:40px}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.sec-tag{font-size:10px;letter-spacing:.2em;font-weight:700;padding:4px 12px;border-radius:4px}
+.sec-tag.blue{background:#e8f2fb;color:#1a6fbf}
+.sec-tag.gold{background:#fef3d8;color:#b07a10}
+.sec-tag.navy{background:#e8eef6;color:#163a63}
+.sec-title{font-family:'Noto Serif JP',serif;font-size:18px;font-weight:700;color:#0b1f3a}
+.sec-divider{flex:1;height:1px;background:#e8eef6;min-width:80px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;align-items:stretch}
+.card{background:#fff;border:1px solid #e8eef6;border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:8px;transition:transform .15s,box-shadow .15s,border-color .15s;cursor:pointer;min-height:180px;text-align:center}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,111,191,.12);border-color:#1a6fbf}
+.card-num{font-size:10px;font-weight:700;letter-spacing:.15em;color:#fff;display:inline-block;padding:2px 8px;border-radius:4px;align-self:center}
+.card-name{font-size:15px;font-weight:700;color:#0b1f3a;line-height:1.4}
+.card-desc{font-size:12px;color:#888;line-height:1.6;flex:1}
+.card.blue{border-top:3px solid #1a6fbf}
+.card.blue .card-num{background:#1a6fbf}
+.card.gold{border-top:3px solid #c8921a}
+.card.gold .card-num{background:#c8921a}
+.card.navy{border-top:3px solid #163a63}
+.card.navy .card-num{background:#163a63}
+.test-btn{margin-top:auto;display:block;width:100%;text-align:center;padding:8px 10px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid;align-self:center;transition:all .15s}
+.card.blue .test-btn{color:#1a6fbf;border-color:#1a6fbf;background:#f0f6fd}
+.card.blue:hover .test-btn{background:#1a6fbf;color:#fff}
+.card.gold .test-btn{color:#b07a10;border-color:#c8921a;background:#fef6df}
+.card.gold:hover .test-btn{background:#c8921a;color:#fff}
+.card.navy .test-btn{color:#163a63;border-color:#163a63;background:#eef3f8}
+.card.navy:hover .test-btn{background:#163a63;color:#fff}
+.badge-soon{display:block;width:100%;text-align:center;font-size:10px;background:#f4f7fb;color:#aaa;border:1px solid #dde5f0;padding:6px 8px;border-radius:4px;font-weight:500;margin-top:auto;align-self:center}
+.back-btn{display:inline-flex;align-items:center;gap:8px;background:#0b1f3a;color:#fff;font-size:14px;padding:12px 24px;border-radius:8px;margin-top:8px;transition:background .2s}
+.back-btn:hover{background:#132d52}
+@media(max-width:900px){
+  .wrap{padding:36px 20px 60px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+}
+@media(max-width:600px){
+  .hero{padding:40px 16px 36px}
+  .hero-title{font-size:24px}
+  .hd{padding:0 16px}
+  .wrap{padding:32px 16px 60px}
+  .cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="hd">
+<span class="hd-logo">産業技術アカデミー</span>
+<a class="hd-back" href="https://sangyo-tech-testt.ulizaportal.jp/">← サイトに戻る</a>
+</div>
+<div class="strip"></div>
+
+<div class="hero">
+<div class="hero-parts">
+  <!-- 歯車 大 -->
+  <div class="gear g1"><svg width="120" height="120" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#e8b84b"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#0ea5c8"/></svg></div>
+  <!-- 歯車 中 -->
+  <div class="gear g2"><svg width="96" height="96" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#0ea5c8"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#e8b84b"/></svg></div>
+  <!-- 歯車 小 -->
+  <div class="gear g3"><svg width="80" height="80" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#fff"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#0ea5c8"/></svg></div>
+  <!-- 歯車 極小 -->
+  <div class="gear g4"><svg width="60" height="60" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#e8b84b"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#fff"/></svg></div>
+  <!-- 歯車 右下 -->
+  <div class="gear g5"><svg width="90" height="90" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#0ea5c8"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#e8b84b"/></svg></div>
+  <!-- 歯車 中央上 -->
+  <div class="gear g6"><svg width="70" height="70" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#fff"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#0ea5c8"/></svg></div>
+  <!-- 歯車 右下2 -->
+  <div class="gear g7"><svg width="84" height="84" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M36 22a14 14 0 100 28 14 14 0 000-28zm0 4a10 10 0 110 20 10 10 0 010-20z" fill="#e8b84b"/><path d="M33 4h6v8h-6zM33 60h6v8h-6zM4 33v6h8v-6zM60 33v6h8v-6zM11.5 13.9l4.2 4.3 5.7-5.6-4.3-4.2zM50.6 55l4.2 4.2 5.6-5.6-4.2-4.3zM13.9 60.5l4.3-4.2-5.6-5.7-4.2 4.3zM55 21.4l4.2-4.2-5.6-5.7-4.3 4.3z" fill="#fff"/></svg></div>
+  <!-- ねじ -->
+  <div class="bolt bolt1">🔩</div>
+  <div class="bolt bolt2">🔧</div>
+  <div class="bolt bolt3">🔩</div>
+  <div class="bolt bolt4">⚙️</div>
+</div>
+<div class="hero-content">
+<div class="hero-label">LEARNING CHECK TEST</div>
+<div class="hero-title">理解度確認テスト（解説付き）</div>
+<div class="hero-sub">各コース・業界別に理解度を確認できます。解説付きなので、間違えた問題もしっかり学習できます。</div>
+</div>
+</div>
+
+<div class="wrap">
+
+<div class="note">
+<span class="note-icon">📘</span>
+<span>はじめての方は <b>教養編テスト</b> から受けてください。教養編 → 初級編 → 中級編 → 実践編 の順で学習を進めることをおすすめします。</span>
+</div>
+
+<div class="note">
+<span class="note-icon">💡</span>
+<span>動画を視聴した後に理解度確認テストを受けることで、理解度をチェックできます。解説付きなので復習にも最適です。URLは準備でき次第順次公開予定です。</span>
+</div>
+
+<div class="sec">
+<div class="sec-head">
+<span class="sec-tag blue">レベル別</span>
+<span class="sec-title">編別テスト</span>
+<span class="sec-divider"></span>
+</div>
+<div class="cards">
+<a href="#" class="card blue"><span class="card-num">LEVEL 00</span><span class="card-name">教養編</span><span class="card-desc">社会人・ビジネス基礎の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card blue"><span class="card-num">LEVEL 01</span><span class="card-name">初級編</span><span class="card-desc">品質管理の基礎知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card blue"><span class="card-num">LEVEL 02</span><span class="card-name">中級編</span><span class="card-desc">実務に必要な中級知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card blue"><span class="card-num">LEVEL 03</span><span class="card-name">実践編</span><span class="card-desc">現場で使える実践知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card blue"><span class="card-num">LEVEL 04</span><span class="card-name">具体例編</span><span class="card-desc">具体的な事例を通じた理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card blue"><span class="card-num">SPECIAL</span><span class="card-name">監査</span><span class="card-desc">監査に関する知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+</div>
+</div>
+
+<div class="sec">
+<div class="sec-head">
+<span class="sec-tag gold">規格別</span>
+<span class="sec-title">規格・GMP別テスト</span>
+<span class="sec-divider"></span>
+</div>
+<div class="cards">
+<a href="https://sites.google.com/view/quiz-kenkousyokuhingmp/%E3%83%9B%E3%83%BC%E3%83%A0" class="card gold"><span class="card-num">GMP</span><span class="card-name">健康食品GMP</span><span class="card-desc">健康食品GMPの理解度確認</span><span class="test-btn">テストを受ける</span></a>
+<a href="#" class="card gold"><span class="card-num">ISO 9001</span><span class="card-name">ISO9001</span><span class="card-desc">品質マネジメントシステムの理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card gold"><span class="card-num">ISO 13485</span><span class="card-name">ISO13485</span><span class="card-desc">医療機器品質マネジメントの理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card gold"><span class="card-num">ISO 14001</span><span class="card-name">ISO14001</span><span class="card-desc">環境マネジメントシステムの理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card gold"><span class="card-num">ISO 16949</span><span class="card-name">ISO16949</span><span class="card-desc">自動車産業品質マネジメントの理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="https://sites.google.com/view/sangyo-tech-iso22000/%E3%83%9B%E3%83%BC%E3%83%A0" class="card gold"><span class="card-num">ISO 22000</span><span class="card-name">ISO22000</span><span class="card-desc">食品安全マネジメントシステムの理解度確認</span><span class="test-btn">テストを受ける</span></a>
+</div>
+</div>
+
+<div class="sec">
+<div class="sec-head">
+<span class="sec-tag navy">業界別</span>
+<span class="sec-title">業界別テスト</span>
+<span class="sec-divider"></span>
+</div>
+<div class="cards">
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">製造業全般</span><span class="card-desc">製造業に共通する知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">医薬品／化粧品業界</span><span class="card-desc">医薬品・化粧品業界特有の知識確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">食品業界</span><span class="card-desc">食品業界特有の品質知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">医療機器業界</span><span class="card-desc">医療機器業界特有の知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">自動車業界</span><span class="card-desc">自動車業界特有の品質知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+<a href="#" class="card navy"><span class="card-num">INDUSTRY</span><span class="card-name">石油業界</span><span class="card-desc">石油業界特有の知識の理解度確認</span><span class="badge-soon">準備中</span></a>
+</div>
+</div>
+
+<a class="back-btn" href="https://sangyo-tech-testt.ulizaportal.jp/">← 産業技術アカデミーに戻る</a>
+
+</div>
+</body>
+</html>
